@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const { existsSync } = require('node:fs');
+//const fs = require('fs');
+//const generatePage = require('./src/page-template');
 
 const promptUser = () => {
     return inquirer.prompt([
@@ -11,7 +12,7 @@ const promptUser = () => {
         {
             type: 'input',
             name: 'github',
-            message: 'Enter your Github Username'
+            message: 'What is your GitHub Username?'
         },
         {
             type: 'input',
@@ -20,54 +21,11 @@ const promptUser = () => {
         }
     ]);
 };
-promptUser()
-    .then(answers => console.log(answers))
-    .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers));
+
+promptUser().then(answers => console.log(answers));
 
 
-const promptProject = () => {
-    console.log(`
-    =================
-    Add a New Project
-    =================
-    `);
-        return inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: 'What is the name of your project?'
-            },
-            {
-                type: 'input',
-                name: 'description',
-                message: 'Provide a description of your project (required)'
-            },
-            {
-                type: 'checkbox',
-                name: 'languages',
-                message: 'What did you build this project with? (Check all that apply)',
-                choices: ['Javascript', 'HTML', 'CSS', 'ES6', 'jQuery', 'Bootstrap', 'Node']
-            },
-            {
-                type: 'input',
-                name: 'link',
-                message: 'Enter the Github link to your project. (Required)'
-            },
-            {
-                type: 'confirm',
-                name: 'feature',
-                message: 'Would you like to feature this project?',
-                default: false
-            },
-            {
-                type: 'confirm',
-                name: 'confirmAddProject',
-                message: 'Would you like to enter another project?',
-                default: false
-            }
-        ]);
-};
+
 
 
 //const fs = require('fs');
