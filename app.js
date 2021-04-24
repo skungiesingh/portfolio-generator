@@ -22,12 +22,6 @@ const promptUser = () => {
     ]);
 };
 
-promptUser()
-    .then(answers => console.log(answers))
-    .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers));
-
-
 const promptProject = () => {
     console.log(`
     =================
@@ -71,7 +65,10 @@ const promptProject = () => {
     ]);
 };
 
-
+promptUser()
+    .then(answers => console.log(answers))
+    .then(promptProject)
+    .then(projectAnswers => console.log(projectAnswers));
 
 
 //const fs = require('fs');
