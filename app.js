@@ -1,5 +1,5 @@
-const inquirer = require('inquirer');
 const fs = require('fs');
+const inquirer = require('inquirer');
 const generatePage = require('./src/page-template');
 
 const promptUser = () => {
@@ -21,8 +21,8 @@ const promptUser = () => {
             type: 'input',
             name: 'github',
             message: 'What is your GitHub Username? (Required)',
-            validate: nameInput => {
-                if (nameInput) {
+            validate: githubInput => {
+                if (githubInput) {
                     return true;
                 } else {
                     console.log('Please enter your GitHub Username!');
@@ -40,18 +40,7 @@ const promptUser = () => {
             type: 'input',
             name: 'about',
             message: 'Provide some information about yourself:',
-            when: ({ confirmAbout }) => {
-                if (confirmAbout) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'about',
-            message: 'Provide some information about yourself:'
+            when: ({ confirmAbout }) => confirmAbout
         }
     ]);
 };
@@ -85,8 +74,8 @@ const promptProject = portfolioData => {
             type: 'input',
             name: 'description',
             message: 'Provide a description of the project (Required)',
-            validate: nameInput => {
-                if (nameInput) {
+            validate: descriptioninput => {
+                if (descriptioninput) {
                     return true;
                 } else {
                     console.log('Please enter a brief description of your project!');
@@ -104,8 +93,8 @@ const promptProject = portfolioData => {
             type: 'input',
             name: 'link',
             message: 'Enter the GitHub link to your project. (Required)',
-            validate: nameInput => {
-                if (nameInput) {
+            validate: linkInput => {
+                if (linkInput) {
                     return true;
                 } else {
                     console.log('Please enter the Github link!');
@@ -141,7 +130,7 @@ promptUser()
     .then(portfolioData => {
         const pageHTML = generatePage(portfolioData);
 
-        fs.writeFile('.index.html', pageHMTL, err => {
+        fs.writeFile('./index.html', pageHTML, err => {
             if (err) throw new Error(err);
 
             console.log('Page created! Check out index.html in this directory to see it!');
