@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
 const generatePage = require('./src/page-template');
 
@@ -33,7 +33,7 @@ const promptUser = () => {
         {
             type: 'confirm',
             name: 'confirmAbout',
-            message: 'Would you like to enter some information about yourselffor an "About" section?',
+            message: 'Would you like to enter some information about yourself for an "About" section?',
             default: true
         },
         {
@@ -47,10 +47,10 @@ const promptUser = () => {
 
 const promptProject = portfolioData => {
     console.log(`
-    =================
-    Add a New Project
-    =================
-    `);
+=================
+Add a New Project
+=================
+`);
 
     //if there is no 'projects' array property, create one then
     if (!portfolioData.projects) {
@@ -128,41 +128,18 @@ const promptProject = portfolioData => {
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-        const pageHTML = generatePage(portfolioData);
-
-        fs.writeFile('./index.html', pageHTML, err => {
-            if (err) throw new Error(err);
-
-            console.log('Page created! Check out index.html in this directory to see it!');
-        });
+        return generatePage(portfolioData);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
     });
-
-
-//const fs = require('fs');
-//const generatePage = require('./src/page-template');
-//
-//const pageHTML = generatePage(name, github);
-//
-//
-//fs.writeFile('./index.html', pageHTML, err => {
-//    if (err) throw err;
-//
-//    console.log('Portfolio complete! Check out index.html to see the output!');
-//});
-
-
-
-
-//const printProfileData = profileDataArr => {
-//    this
-//    for (let i = 0; i < profileDataArr.length; i += 1) {
-//    console.log(profileDataArr[i]);
-//    }
-
- //   console.log('============');
-
-//    is the same as this...
-//    profileDataArr.forEach(profileItem => console.log(profileItem));
-//};
-
-//printProfileData(profileDataArgs);
